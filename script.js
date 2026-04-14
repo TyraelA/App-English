@@ -24,6 +24,7 @@ function renderMenu() {
 
 // LOAD BÀI TẬP DỰA VÀO ID
 function loadExercise(id) {
+  document.querySelector(".sidebar").classList.remove("open");
   // 1. Mở khóa bài làm (để chuyển bài mới không bị khóa cứng)
   isLocked = false;
 
@@ -630,4 +631,10 @@ function drop(ev) {
   ) {
     document.getElementById("word-bank").appendChild(draggedElement);
   }
+}
+
+// Hàm đóng/mở menu trên điện thoại
+function toggleMenu() {
+  const sidebar = document.querySelector(".sidebar");
+  sidebar.classList.toggle("open");
 }
