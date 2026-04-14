@@ -21,7 +21,11 @@
     <script src="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/index.min.js"></script>
 
     <script>
-      MobileDragDrop.polyfill();
+      MobileDragDrop.polyfill({
+        holdToDrag: 200,
+      });
+
+      window.addEventListener("touchmove", function () {}, { passive: false });
     </script>
     <script src="data.js"></script>
     <script src="script.js"></script>

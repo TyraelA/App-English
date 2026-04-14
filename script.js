@@ -214,20 +214,19 @@ function renderMarkWordsUI(data) {
 function renderCategorizeUI(data) {
   let html = getCommonHeader(data.title, data.instruction);
 
-  // Khu vực chứa từ vựng
-  html += `<div class="word-bank" id="word-bank" ondrop="drop(event)" ondragover="allowDrop(event)">`;
+  // Đã thêm ondragenter vào kho từ
+  html += `<div class="word-bank" id="word-bank" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="allowDrop(event)">`;
   data.words.forEach((word, idx) => {
     html += `<span class="draggable-word" draggable="true" id="cat-word-${idx}" ondragstart="drag(event)">${word}</span>`;
   });
   html += `</div>`;
 
-  // Khu vực các cột
   html += `<div class="category-columns">`;
   data.categories.forEach((cat, idx) => {
     html += `
             <div class="category-wrapper">
                 <div class="category-title">${cat.name}</div>
-                <div class="category-box multi-drop-zone" id="cat-box-${idx}" data-category="${cat.name}" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div>
+                <div class="category-box multi-drop-zone" id="cat-box-${idx}" data-category="${cat.name}" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondragenter="allowDrop(event)"></div>
             </div>`;
   });
   html += `</div>`;
@@ -564,18 +563,17 @@ function showAnswers() {
 function renderDragDropUI(data) {
   let html = getCommonHeader(data.title, data.instruction);
 
-  // Khung chứa từ vựng (Word Bank) - có thể thả từ về lại đây
-  html += `<div class="word-bank" id="word-bank" ondrop="drop(event)" ondragover="allowDrop(event)">`;
+  // Đã thêm ondragenter vào kho từ
+  html += `<div class="word-bank" id="word-bank" ondrop="drop(event)" ondragover="allowDrop(event)" ondragenter="allowDrop(event)">`;
   data.wordBank.forEach((word, idx) => {
     html += `<span class="draggable-word" draggable="true" id="drag-${idx}" ondragstart="drag(event)">${word}</span>`;
   });
   html += `</div>`;
 
-  // Render câu hỏi có lỗ hổng
   data.questions.forEach((q, index) => {
     let parsedText = q.replace(/\[(.*?)\]/g, (match, word) => {
       return `<span class="input-wrapper">
-                        <span class="drop-zone" data-missing="${word}" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></span>
+                        <span class="drop-zone" data-missing="${word}" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondragenter="allowDrop(event)"></span>
                         <span class="floating-answer" id="fa-dd-${index}">${word}</span>
                     </span>`;
     });
