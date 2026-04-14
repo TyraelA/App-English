@@ -1,0 +1,543 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f2f5;
+  color: #333;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* NAVBAR - Đã sửa lỗi cuộn và click */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: white;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  height: 100vh; /* Full chiều cao màn hình */
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Cho phép cuộn dọc */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h3 {
+  text-align: center;
+  margin: 10px 0 20px 0;
+  font-size: 20px;
+  border-bottom: 1px solid #34495e;
+  padding-bottom: 15px;
+  flex-shrink: 0; /* Không cho tiêu đề bị co lại khi cuộn */
+}
+
+.nav-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Chiếm trọn phần còn lại để cuộn */
+  padding-bottom: 50px; /* Tạo khoảng trống dưới cùng để dễ nhìn bài cuối */
+}
+
+/* Đảm bảo button luôn nhận diện được click */
+.nav-links li {
+  width: 100%;
+  margin: 0;
+}
+
+.nav-links button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  display: block;
+  padding: 12px 20px;
+  color: #bdc3c7;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: inherit;
+  word-wrap: break-word; /* Tự xuống dòng nếu tên bài tập quá dài */
+}
+/* Hiệu ứng khi di chuột qua */
+.nav-links button:hover {
+  background-color: #34495e;
+  color: white;
+}
+
+/* Hiệu ứng ĐẬM MÀU khi bài tập đang được chọn */
+.nav-links button.active {
+  background-color: #2980b9;
+  color: white;
+  font-weight: bold;
+  border-left: 5px solid #3498db;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  margin-left: 250px;
+  padding: 40px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+.container {
+  max-width: 800px;
+  width: 100%;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.4s;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+.instructions {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* FILL IN THE BLANKS */
+.sentence {
+  margin-bottom: 25px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+input[type="text"] {
+  border: none;
+  border-bottom: 2px solid #95a5a6;
+  background: transparent;
+  font-size: 18px;
+  font-family: monospace;
+  width: 120px;
+  padding: 0 5px;
+  color: #2980b9;
+  outline: none;
+  transition: border-color 0.3s;
+}
+input[type="text"]:focus {
+  border-bottom: 2px solid #2980b9;
+}
+.floating-answer {
+  position: absolute;
+  bottom: 100%;
+  left: 5px;
+  background-color: #3498db;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: monospace;
+  font-weight: bold;
+  display: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  z-index: 10;
+  white-space: nowrap;
+}
+.floating-answer::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #3498db transparent transparent transparent;
+}
+
+/* MULTIPLE CHOICE */
+.question-block {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #ecf0f1;
+}
+.question-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option-label {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+}
+.option-label:hover {
+  background-color: #e2e6ea;
+}
+input[type="radio"] {
+  margin-right: 15px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+input[type="radio"]:checked + span {
+  font-weight: bold;
+}
+
+/* COLORS & STATES */
+.correct {
+  background-color: #d4edda !important;
+  border-color: #28a745 !important;
+  color: #155724;
+  font-weight: bold;
+}
+.wrong {
+  background-color: #f8d7da !important;
+  border-color: #dc3545 !important;
+  color: #721c24;
+}
+.show-hint {
+  background-color: #cce5ff !important;
+  border-color: #007bff !important;
+  color: #004085;
+  font-weight: bold;
+}
+.show-hint::after {
+  content: " (Correct)";
+  font-size: 14px;
+  color: #0056b3;
+  font-style: italic;
+  margin-left: 5px;
+}
+
+/* BUTTONS */
+.buttons {
+  margin-top: 40px;
+  text-align: center;
+}
+.action-btn {
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s;
+}
+.btn-submit {
+  background-color: #27ae60;
+  color: white;
+}
+.btn-submit:hover {
+  background-color: #219653;
+}
+.btn-show {
+  background-color: #f39c12;
+  color: white;
+  display: none;
+}
+.btn-show:hover {
+  background-color: #e67e22;
+}
+.btn-reset {
+  background-color: #e74c3c;
+  color: white;
+}
+.btn-reset:hover {
+  background-color: #c0392b;
+}
+.result-text {
+  margin-top: 25px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ================= DRAG AND DROP ================= */
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #e2e8f0;
+  border-radius: 8px;
+  min-height: 50px;
+  border: 2px dashed #cbd5e1;
+}
+.draggable-word {
+  padding: 8px 15px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 5px;
+  cursor: grab;
+  font-weight: bold;
+  user-select: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s;
+}
+.draggable-word:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+.drop-zone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  height: 38px;
+  border: 2px dashed #95a5a6;
+  border-radius: 5px;
+  vertical-align: middle;
+  margin: 0 5px;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+.drop-zone.drag-over {
+  background-color: #d1ecf1;
+  border-color: #17a2b8;
+  transform: scale(1.05);
+}
+.drop-zone .draggable-word {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+
+/* ================= REWRITE SENTENCES ================= */
+.rewrite-block {
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #ecf0f1;
+}
+.sentence-prompt {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  line-height: 1.5;
+}
+.rewrite-input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: 10px;
+}
+.arrow {
+  font-weight: bold;
+  margin-right: 15px;
+  color: #7f8c8d;
+  font-size: 18px;
+}
+.rewrite-input {
+  flex-grow: 1;
+  border: none;
+  border-bottom: 2px solid #95a5a6;
+  background: transparent;
+  font-size: 16px;
+  padding: 5px 10px;
+  color: #2980b9;
+  outline: none;
+  transition: 0.3s;
+  font-family: inherit;
+}
+.rewrite-input:focus {
+  border-bottom-color: #2980b9;
+  background-color: #f8f9fa;
+}
+.rewrite-hint {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 15px;
+  margin-top: 15px;
+  margin-left: 35px; /* Thụt lề cho thẳng hàng với chữ */
+  display: none; /* Mặc định ẩn */
+  border-left: 4px solid #17a2b8;
+  font-weight: 500;
+  line-height: 1.5;
+}
+/* Xóa bỏ hiệu ứng mũi tên tam giác của kiểu bóng nổi cũ */
+.rewrite-hint::after {
+  display: none;
+}
+.correct-input {
+  color: #27ae60 !important;
+  border-bottom-color: #27ae60 !important;
+  font-weight: 500;
+}
+.wrong-input {
+  color: #e74c3c !important;
+  border-bottom-color: #e74c3c !important;
+}
+
+/* ================= FILL VERB (CHIA ĐỘNG TỪ) ================= */
+.fill-verb-input {
+  border: none;
+  border-bottom: 2px solid #95a5a6;
+  background: transparent;
+  font-size: 18px;
+  font-family: monospace;
+  width: 150px; /* Rộng hơn để chứa các từ dài */
+  padding: 0 5px;
+  color: #2980b9;
+  outline: none;
+  transition: border-color 0.3s;
+  text-align: center; /* Căn giữa chữ cho đẹp */
+}
+.fill-verb-input:focus {
+  border-bottom: 2px solid #2980b9;
+}
+
+/* ================= CIRCLE THE WORD (KHOANH TRÒN) ================= */
+.circle-group {
+  display: inline-block;
+  background-color: #f8f9fa;
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid #e9ecef;
+}
+.circle-option {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #2c3e50;
+  transition: all 0.2s;
+  user-select: none;
+}
+.circle-option:hover {
+  background-color: #e2e8f0;
+}
+.circle-option.selected {
+  background-color: #3498db;
+  color: white;
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
+}
+.slash {
+  color: #95a5a6;
+  margin: 0 2px;
+}
+.correct-circle {
+  background-color: #27ae60 !important;
+  color: white !important;
+}
+.wrong-circle {
+  background-color: #e74c3c !important;
+  color: white !important;
+}
+.show-hint-circle {
+  border: 2px solid #007bff;
+  color: #007bff;
+  font-weight: bold;
+  background-color: #e6f2ff;
+}
+/* ================= MARK WORDS (GẠCH CHÂN & TÔ MÀU) ================= */
+.clickable-word {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: 0.2s;
+  user-select: none;
+  display: inline-block;
+}
+.clickable-word:hover {
+  background-color: #e2e8f0;
+}
+
+/* Trạng thái do người dùng chọn */
+.marked-ul {
+  text-decoration: underline;
+  text-decoration-color: #2980b9;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+}
+.marked-hl {
+  background-color: #f1c40f;
+  color: #333;
+}
+
+/* Trạng thái khi Submit (Chấm điểm) */
+.clickable-word.correct-mark {
+  color: #27ae60 !important;
+  font-weight: bold;
+}
+.clickable-word.wrong-mark {
+  color: #e74c3c !important;
+  text-decoration-color: #e74c3c !important;
+}
+
+/* Trạng thái khi Show Answers (Gợi ý) */
+.show-hint-ul {
+  border-bottom: 3px solid #2980b9;
+}
+.show-hint-hl {
+  border: 2px dashed #e67e22;
+  background-color: #fef9e7;
+}
+/* ================= CATEGORIZE (PHÂN LOẠI VÀO CỘT) ================= */
+.category-columns {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+.category-wrapper {
+  flex: 1;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.category-title {
+  background: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.category-box {
+  min-height: 150px;
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: flex-start;
+  flex-grow: 1;
+  transition: background-color 0.3s;
+}
+.category-box.drag-over {
+  background-color: #d1ecf1;
+}

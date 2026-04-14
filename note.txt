@@ -1,0 +1,9 @@
+type: "fill-blank", // <--- NHÃN: Hoàn thiện từ với chữ cái cho trước
+type: "multiple-choice", // <--- NHÃN: TRẮC NGHIỆM chọn ABCD
+type: "reorder", // <--- NHÃN: SẮP XẾP CÂU // cái này chưa có
+type: "drag-drop", // NHÃN : Kéo thả // mô tả en: Drag the words from the word bank and drop them into the correct blanks.
+type: "rewrite", // Nhãn: viết lại câu
+type: "fill-verb", // TYPE : Chia động từ -- viết điền 
+type: "circle", // TYPE: Khoanh tròn
+type: "mark-words", // Type: đánh dấu từ bằng gạch chân
+type: "categorize", // TYPE: Phân loại -- phân loại các từ vào các hộp
