@@ -69,9 +69,9 @@ function getCommonHeader(title, instruction) {
 function getCommonButtons() {
   return `
         <div class="buttons">
-            <button class="action-btn btn-submit" onclick="checkAnswers()">Submit</button>
-            <button class="action-btn btn-show" id="btn-show" onclick="showAnswers()">Show Answers</button>
-            <button class="action-btn btn-reset" onclick="loadExercise(currentExercise.id)">Reset</button>
+            <button class="action-btn btn-submit" onclick="checkAnswers()">Gửi</button>
+            <button class="action-btn btn-show" id="btn-show" onclick="showAnswers()">Đáp Án</button>
+            <button class="action-btn btn-reset" onclick="loadExercise(currentExercise.id)">Làm Lại</button>
         </div>
         <div id="result-text" class="result-text"></div>
     `;
