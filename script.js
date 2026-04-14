@@ -4,9 +4,20 @@ let isLocked = false;
 // Chạy ngay khi trang web vừa tải xong
 window.onload = function () {
   renderMenu();
-  // Tự động load bài đầu tiên
   if (allExercises.length > 0) {
-    loadExercise(allExercises[0].id);
+    // 1. Mở "sổ ghi chú" xem lần trước đang làm bài nào
+    const savedId = localStorage.getItem("currentExerciseId");
+    const defaultId = allExercises[0].id; // Bài đầu tiên mặc định
+
+    // 2. Kiểm tra xem ID bài cũ có hợp lệ không (phòng khi bạn xóa bớt bài trong data)
+    const isValidId = allExercises.some((ex) => ex.id === savedId);
+
+    // 3. Nếu có bài cũ và hợp lệ -> Tải bài cũ. Nếu không -> Tải bài đầu tiên
+    if (savedId && isValidId) {
+      loadExercise(savedId);
+    } else {
+      loadExercise(defaultId);
+    }
   }
 };
 
@@ -24,23 +35,28 @@ function renderMenu() {
 
 // LOAD BÀI TẬP DỰA VÀO ID
 function loadExercise(id) {
+  // 1. LƯU LẠI ID BÀI TẬP VÀO BỘ NHỚ (Để khi ấn F5 trang web vẫn nhớ)
+  localStorage.setItem("currentExerciseId", id);
+
+  // 2. Đóng menu trên điện thoại sau khi click chọn bài
   document.querySelector(".sidebar").classList.remove("open");
-  // 1. Mở khóa bài làm (để chuyển bài mới không bị khóa cứng)
+
+  // 3. Mở khóa bài làm (để chuyển bài mới không bị khóa cứng)
   isLocked = false;
 
-  // 2. Cập nhật giao diện thanh Menu bên trái
+  // 4. Cập nhật giao diện thanh Menu bên trái
   document
     .querySelectorAll(".nav-links button")
     .forEach((btn) => btn.classList.remove("active"));
   document.getElementById(`nav-${id}`).classList.add("active");
 
-  // 3. Tải dữ liệu bài tập mới từ data.js
+  // 5. Tải dữ liệu bài tập mới từ data.js
   currentExercise = allExercises.find((ex) => ex.id === id);
 
-  // 4. Cuộn màn hình lên đầu trang
+  // 6. Cuộn màn hình lên đầu trang
   window.scrollTo(0, 0);
 
-  // 5. Gọi hàm "Vẽ Giao Diện" tương ứng với type của bài tập
+  // 7. Gọi hàm "Vẽ Giao Diện" tương ứng với type của bài tập
   if (currentExercise.type === "fill-blank") {
     renderFillBlankUI(currentExercise);
   } else if (currentExercise.type === "multiple-choice") {
